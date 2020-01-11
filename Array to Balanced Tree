@@ -1,0 +1,52 @@
+#include<iostream>
+using namespace std;
+
+struct node{
+ int data;
+ node* left;
+ node* right;
+  
+   node(int data){
+       this->data = data;
+       left = right = NULL;
+   }
+};
+
+node* ArrayToBalancedTree(int a[],int start,int end){
+  if(start>end){
+      return NULL;
+  }
+
+ int mid = (start+end)/2; // mid value
+ int data = a[mid];
+
+  node* root = new node(data);
+  root->left = ArrayToBalancedTree(a,start,mid-1);
+  root->right = ArrayToBalancedTree(a,mid+1,end);
+  return root; 
+}
+
+void print(node* root){
+    if(root==NULL){
+        return;
+    }
+cout<<root->data<<" ";
+print(root->left);
+print(root->right);
+return;    
+}
+
+int main(){
+int n;
+cin>>n;
+int a[100];
+node* root = NULL;
+
+   for(int i=0;i<n;i++){
+       cin>>a[i];
+   }
+
+   root = ArrayToBalancedTree(a,0,n-1); 
+   print(root); 
+    return 0;
+}
