@@ -1,0 +1,76 @@
+#include <bits/stdc++.h>
+using namespace std;
+string s1 = "true",s2 = "t";
+vector<char> v,v1,temp;
+
+struct node{
+ int data;
+ node* left;
+ node* right;
+
+    node(int data){
+        this -> data = data;
+        left = right = NULL;
+    }
+};
+
+node* createTree(node* root){
+ int data;
+ cin >> data;
+
+ root = new node(data);  // creating is comp  
+ string s;
+ cin >> s;
+    if(s.compare(s1) == 0 || s.compare(s2) == 0){
+        temp.push_back('L');
+        root -> left = createTree(root);
+    }
+ cin >> s;
+    if(s.compare(s1) == 0 || s.compare(s2) == 0){
+        temp.push_back('R');
+        root -> right = createTree(root);
+    }
+
+  return root;
+}
+
+void preOrder(node* root){
+ if(root == NULL) return;
+
+ cout<< root->data <<" ";
+ preOrder(root->left);
+ preOrder(root->right);
+ return;
+}
+
+
+int main(){
+
+node* root = NULL;
+
+root = createTree(root);
+   for(int i=0;i<temp.size();i++)  v.push_back(temp[i]);
+
+temp.clear();
+root = NULL;
+root = createTree(root);
+    for(int i=0;i<temp.size();i++) v1.push_back(temp[i]);
+
+//preOrder(root);
+  if(v.size() != v1.size()){
+      cout <<"false"<<endl;
+      return 0;
+  }else{
+
+    for(int i=0;i<v.size();i++){
+        if(int(v[i]) != int(v1[i])){
+            cout <<"false"<<endl;
+            return 0;
+        }
+    }
+
+  }
+
+  cout << "true" <<endl;
+  return 0;  
+}
