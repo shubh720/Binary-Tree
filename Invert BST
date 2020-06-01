@@ -1,0 +1,70 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct node{
+ 
+ int data;
+ node *left,*right;
+
+    node(int data){
+        this -> data = data;
+        left = right = NULL;
+    }
+};
+
+node *createTree(node* root){
+int data;
+cin >> data;
+    if(data == -1) return NULL;
+    else root = new node(data);
+
+queue<node* >q;
+q.push(root);
+
+    while(!q.empty()){
+        node* top = q.front();
+        q.pop();
+    cin >> data;    
+        if(data != -1){
+            top -> left = new node(data);
+            q.push(top->left); 
+        }else top -> left = NULL;
+    cin >> data; 
+        if(data != -1){
+            top -> right = new node(data);
+            q.push(top->right);
+        }else top -> right = NULL;
+    }    
+ return root;
+}
+
+void print(node* root){
+    if(!root) return;
+
+ cout << root -> data << " ";
+ print(root->left);
+ print(root->right);   
+}
+
+node* newroot = NULL;
+
+node* invert(node* root){
+  if(root == NULL) return NULL;  
+  
+node* temp = root -> left;
+root -> left = invert(root -> right);
+root -> right = invert(temp);
+
+return root;
+}
+
+int main(){
+
+node *root = NULL;
+root = createTree(root);
+//print(root); 
+root = invert(root);
+print(root);
+
+   return 0; 
+}
